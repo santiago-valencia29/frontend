@@ -1,0 +1,57 @@
+<nav *ngIf="showNavbar" class="navbar navbar-expand-lg navbar-dark bg-navbar animated fadeIn ">
+
+
+
+    <a class="navbar-brand nav-pointer mt-4 family-nav" mat-button [matMenuTriggerFor]="menuNavbar">
+        <h2><i class="fas fa-tasks mr-2"></i>Administrador de tareas<i class="fas fa-chevron-down ml-2 pt-1"></i></h2>
+    </a>
+    <mat-menu #menuNavbar="matMenu">
+
+        <li routerLink="/mostrar-tareas" mat-menu-item>
+            <mat-icon aria-hidden="true">note</mat-icon>Ver tareas
+        </li>
+        <li routerLink="/tareas-completas" mat-menu-item>
+            <mat-icon aria-hidden="true">playlist_add_check</mat-icon>Tareas Completadas
+        </li>
+        <li routerLink="/tareas-altas" mat-menu-item>
+            <mat-icon aria-hidden="true">trending_up</mat-icon>Tareas prioridad alta
+        </li>
+        <li routerLink="/tareas-medias" mat-menu-item>
+            <mat-icon aria-hidden="true">trending_flat</mat-icon>Tareas prioridad media
+        </li>
+        <li routerLink="/tareas-bajas" mat-menu-item>
+            <mat-icon aria-hidden="true">trending_down</mat-icon>Tareas prioridad baja
+        </li>
+        <li routerLink="/tareas-vencidas" mat-menu-item>
+            <mat-icon aria-hidden="true">event</mat-icon>Tareas Vencidas
+        </li>
+
+    </mat-menu>
+    <button class="navbar-toggler ml-2" type="button" data-toggle="collapse" data-target="#navbarColor01"
+        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="fas fa-bars"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <button matTooltip="Tareas próximas a vencer" class="icon-menu nav-pointer" mat-button
+            [matMenuTriggerFor]="menuNotify">
+            <i class="far fa-bell fa-lg ml-3"></i>
+            <span class="badge badge-pill badge-primary notify">{{countAlarm}}</span>
+            <mat-menu #menuNotify="matMenu">
+                <li mat-menu-item disabled>Seleccionar Tarea </li>
+                <li *ngFor="let task of tasksAlarmDate" mat-menu-item (click)="openModal(task,false)">Tarea:
+                    {{task.name}} - Fecha: {{task.dueDate|date:'dd-MM-yyyy'}}</li>
+            </mat-menu>
+        </button>
+
+        <div class="icon-menu">
+            <button mat-button [matMenuTriggerFor]="menuSesion"> <i
+                    class="far fa-user-circle fa-lg mr-1"></i>{{user}}</button>
+            <mat-menu #menuSesion="matMenu">
+                <li mat-menu-item (click)="logout()">Cerrar Sesión</li>
+            </mat-menu>
+        </div>
+    </div>
+</nav>

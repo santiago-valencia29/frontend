@@ -1,0 +1,69 @@
+<div class="container  ">
+    <div class="row float-right">
+
+        <mat-icon (click)="onClose()" class="close-modal " aria-hidden="true">close</mat-icon>
+
+    </div>
+
+
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 mt-5">
+            <form [formGroup]="taskFormGroup" class="form-group">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Nombre de Tarea</mat-label>
+                    <input formControlName="name" matInput [errorStateMatcher]="matcher" required>
+                    <mat-error *ngIf="taskFormGroup.controls['name'].errors">
+                        Debe ser un nombre válido (+4 caracteres)
+                    </mat-error>
+                    <mat-icon matSuffix>edit</mat-icon>
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Descripción</mat-label>
+                    <textarea matInput formControlName="description" [errorStateMatcher]="matcher"></textarea>
+                    <mat-icon matSuffix>edit</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Estado</mat-label>
+                    <mat-select formControlName="state" [errorStateMatcher]="matcher" required>
+                        <mat-option>Seleccionar estado</mat-option>
+                        <mat-option *ngFor="let state of states" [value]="state.id">{{state.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="taskFormGroup.controls['state']">Seleccionar estado</mat-error>
+                    <mat-icon matSuffix>edit_attributes</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Prioridad</mat-label>
+                    <mat-select formControlName="priority" [errorStateMatcher]="matcher" required>
+                        <mat-option>Seleccionar prioridad</mat-option>
+                        <mat-option *ngFor="let priority of prioritys" [value]="priority.id">{{priority.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="taskFormGroup.controls['priority']">Seleccionar estado</mat-error>
+                    <mat-icon matSuffix>insert_chart</mat-icon>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Fecha de vencimiento</mat-label>
+                    <input type="date" matInput formControlName="dueDate" [errorStateMatcher]="matcher" required>
+                    <mat-error *ngIf="taskFormGroup.controls['dueDate']">Seleccionar fecha de vencimiento</mat-error>
+                    <mat-icon matSuffix>calendar_today</mat-icon>
+
+                </mat-form-field>
+
+                <button (click)="updateTask()" *ngIf="!showActionButton"
+                    class="btn-sm btn-light mt-2">Actualizar</button>
+                <button *ngIf="showActionButton" (click)="saveTask()"
+                    class="btn-sm btn-dar mt-2">Guardar</button>
+            </form>
+        </div>
+        <div class="col-sm-2">
+
+        </div>
+        <div class="col-sm-4 mt-5">
+            <img class="img-fluid img-top mt-5" src="../../../assets/images/task.svg" alt="">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+<h2 class="text-white ">
+    <mat-icon aria-hidden="true">trending_down</mat-icon> Tareas Prioridad Baja
+</h2>
+
+<button (click)="openModal(null,true)" class="btn-sm btn-primary mb-2 ">
+    <mat-icon style="font-size: 20px;" aria-hidden="true">note_add</mat-icon>Nueva tarea
+</button>
+
+<div class="row" *ngIf="loadingTasks">
+    <div class="col">
+
+        <div class="alert alert-dismissible alert-primary bg-transparent text-center">
+            <i class="fa fa-sync fa-spin fa-2x"></i>
+            <h1>Espere...</h1>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="notData" class="alert alert-dismissible alert-primary">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Sin tareas</strong>
+</div>
+
+<div *ngIf="!loadingTasks" class="card-columns animated fadeInDown">
+
+    <div class="card task border-success mb-3" *ngFor="let task of tasks; trackBy: trackItem">
+        <div class="card-body">
+            <h2 class="card-title text-white " style="text-decoration: underline;">{{task.name}}<mat-icon
+                    (click)="deleteTask(task._id)" class="task-icon-delete float-right ml-4 " aria-hidden="true">delete
+                </mat-icon>
+                <mat-icon class="float-right task-icon-edit" (click)="openModal(task,false)" aria-hidden="true">edit
+                </mat-icon>
+            </h2>
+            <p class="card-text text-light">Descripción:</p>
+            <p class="card-text text-light bg-dark p-2">{{task.description}}</p>
+            <div class="row">
+                <div class="col-lg">
+                    <p class="card-text">
+                        <i class="far fa-calendar-check"></i>
+
+                        Estado:
+                        <span class="text-muted">
+                            {{task.state}}
+                        </span>
+                    </p>
+                </div>
+                <div class="col-lg">
+                    <p class="card-text">
+                        <i class="fas fa-file-signature"></i> Prioridad:
+                        <span [ngClass]="{
+                            'baja': task.priority =='baja',
+                            'media': task.priority == 'media',
+                            'alta': task.priority == 'alta'
+                            }">
+                            {{task.priority}}
+                        </span>
+                    </p>
+                </div>
+                <div class="col-lg">
+                    <p class="card-text">
+
+                        Vencimiento
+                        <span class="text-muted" style="font-size: 12px;">
+                            <i class="fas fa-calendar-times"></i>
+                            {{task.dueDate|date:'dd-MM-yyyy'}}
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
